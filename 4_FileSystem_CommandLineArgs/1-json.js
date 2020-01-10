@@ -18,10 +18,13 @@ const fs = require('fs')
 const databuffer = fs.readFileSync('1-json.json')
 const dataJSON = databuffer.toString()
 const data = JSON.parse(dataJSON)
- data.title = "eeeeeee"
+console.log(data.title)
+// const dataJSON = databuffer.toString()
+// const data = JSON.parse(dataJSON)
+//  data.title = "eeeeeee"
 
- const dataUpdate = JSON.stringify(data)
- fs.writeFileSync('1-json.json',dataUpdate)
+//  const dataUpdate = JSON.stringify(data)
+//  fs.writeFileSync('1-json.json',dataUpdate)
  
 
 
