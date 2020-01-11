@@ -6,7 +6,6 @@
     <!-- ./ 하드드라이버  경로 / 절대경로 -->
 
     
-   <script src="/js/app.js"></script>
 
 
     <title>Document</title>
@@ -19,13 +18,28 @@
 
        <h1>{{name}}</h1> 
 
-       <p>{{title}}</p>
+       <p id="message-1">{{title}}</p>
+
+       <div>
+           <form>
+               <input placeholder="location">
+               <button>submit</button>
+           </form>
+           <p id="message-2"></p>
+       </div>
 
        </div>
+
+       
 
 
        {{>footer}}
 </body>
+
+
+
+
+   <script src="/js/app.js"></script>
     </html>
 
     {{!-- nodemon src/app.js -e js,hbs
