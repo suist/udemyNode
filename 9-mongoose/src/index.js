@@ -35,6 +35,20 @@ app.listen(port, () =>{
     
 })
 
+const Task = require('./models/task')
+const User = require('./models/user')
+
+const main =async () =>{
+    // const task = await Task.findById("5e2ffcffab27fd2aaf1df956")
+    // await task.populate('owner').execPopulate() //owner 에 id 값 뿐만 아니라 id 객체를 넣기
+    // console.log(task.owner) 
+    const user = await User.findById("5e2ff7c8ab27fd2aaf1df952")
+    await user.populate('tasks').execPopulate()
+    console.log(user.tasks)
+}
+
+main()
+
 // const jwt = require('jsonwebtoken')
 
 // const myFunction = async () =>{
