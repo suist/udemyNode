@@ -4,6 +4,7 @@ const Task = require('../models/task')
 const auth = require('../middleware/auth')
 
 
+//create task
 router.post('/tasks',auth, async (req,res)=>{
 
     //const task =new Task(req.body)
@@ -31,19 +32,31 @@ router.post('/tasks',auth, async (req,res)=>{
 
 })
 
-router.get('/tasks',async (req,res)=>{
+// GEt /tasks?completed=false
+//pagination -> GET /tasks?limit=10skip=20 customizing
+//tasks?limit=2
+
+router.get('/tasks',auth, async (req,res)=>{
+    const match ={}
+
+    if(req.query.completed){
+        match.completed = req.query.completed ==='true'
+    }
         try {
-            const tasks = await Task.find({})
-            res.send(tasks)
+            await req.user.populate({
+                path:'tasks',
+                match,
+                options :{
+                    limit:parseInt(req.query.limit) // limit: 페이지에 표시할 양
+                    ,skip : parseInt(req.query.skip) // skip : pagination 넘길 쪽 수
+                }
             
+            }).execPopulate()
+            res.send(req.user.tasks)
         } catch (error) {
             res.status(500).send()
             
         }
-
-
-
-
 
     // Task.find({}).then((tasks)=>{
     //     res.send(tasks)
@@ -57,14 +70,17 @@ router.get('/tasks',async (req,res)=>{
 })
 
 
-
-router.get('/tasks/:id',async (req,res)=>{
+//read from ID 
+router.get('/tasks/:id',auth, async (req,res)=>{
     const _id =req.params.id
 
     try {
-        const tasks= await Task.findById(_id)
+        
+        // const tasks= await Task.findById(_id)
+        const tasks = await Task.findOne({_id, owner: req.user._id})
+
         if(!tasks){
-              return res.status(404).send
+              return res.status(404).send()
                 }
           res.send(tasks)
 
@@ -85,6 +101,8 @@ router.get('/tasks/:id',async (req,res)=>{
     //     res.status(500).send()
     // })
 })
+
+//update 
 router.patch('/tasks/:id',async (req,res)=>{
     const updates = Object.keys(req.body)
     const allowedUpdates = ['description','completed']
@@ -112,6 +130,7 @@ router.patch('/tasks/:id',async (req,res)=>{
 })
 
 
+//delete
 router.delete('/tasks/:id', async (req,res)=>{
     try {
      const task =await Task.findByIdAndDelete(req.params.id)

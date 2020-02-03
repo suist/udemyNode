@@ -56,7 +56,7 @@ const userSchema = new mongoose.Schema({
     }]
 })
 
-//task user   연결 가상 
+//task user 연결-  가상  스키마 
 userSchema.virtual('tasks',{
     ref:'Task',
     localField:'_id',
