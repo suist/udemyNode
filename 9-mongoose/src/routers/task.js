@@ -35,12 +35,20 @@ router.post('/tasks',auth, async (req,res)=>{
 // GEt /tasks?completed=false
 //pagination -> GET /tasks?limit=10skip=20 customizing
 //tasks?limit=2
-
+//GET /tasks?sorkBy=createdAt:desc
+// asc
 router.get('/tasks',auth, async (req,res)=>{
     const match ={}
+    const sort = {}
 
     if(req.query.completed){
         match.completed = req.query.completed ==='true'
+    }
+
+    if(req.query.sortBy){
+        const parts = req.query.sortBy.split(':')
+        sort[parts[0]] = part[1] === 'desc' ? -1: 1
+    
     }
         try {
             await req.user.populate({
@@ -48,7 +56,11 @@ router.get('/tasks',auth, async (req,res)=>{
                 match,
                 options :{
                     limit:parseInt(req.query.limit) // limit: 페이지에 표시할 양
-                    ,skip : parseInt(req.query.skip) // skip : pagination 넘길 쪽 수
+                    ,skip : parseInt(req.query.skip)
+                    ,sort 
+                    // :{
+                        // completed: -1 // descending-역순으로 -1, asceding 1 점점커지는
+                    // } // skip : pagination 넘길 쪽 수
                 }
             
             }).execPopulate()
