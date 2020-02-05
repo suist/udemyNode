@@ -41,13 +41,14 @@ router.get('/tasks',auth, async (req,res)=>{
     const match ={}
     const sort = {}
 
+    
     if(req.query.completed){
         match.completed = req.query.completed ==='true'
     }
 
     if(req.query.sortBy){
         const parts = req.query.sortBy.split(':')
-        sort[parts[0]] = part[1] === 'desc' ? -1: 1
+        sort[parts[0]] = parts[1] === 'desc' ? -1: 1 // sortBy = desc 면-1 
     
     }
         try {
