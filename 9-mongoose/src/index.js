@@ -9,7 +9,23 @@ const port = process.env.PORT || 3000
 
 const multer = require('multer')
 const upload = multer({
-    dest:'images'
+    dest:'images',
+    limits: {
+        fileSize:10000000000
+    },
+    // fileFilter(req, file, cb) {
+    //     if(!file.originalname.endsWith('.pdf')){
+    //         return cb(new Error('File must be a PDF'))
+    //     }
+
+    //     if(!file.originalname.match(/\.(doc|docx)$/)){
+    //         return cb(new Error('File must be a word file'))
+    //     }
+
+    // }
+    //        cb(new Error('File must be a PDF'))-> 에러 메시지 띄우기
+    //cb(undefined,true)-> true 정상  callback
+
 })
 app.post('/upload', upload.single('upload'), (req,res)=>{
     res.send()
@@ -46,16 +62,16 @@ app.listen(port, () =>{
 const Task = require('./models/task')
 const User = require('./models/user')
 
-const main =async () =>{
-    // const task = await Task.findById("5e2ffcffab27fd2aaf1df956")
-    // await task.populate('owner').execPopulate() //owner 에 id 값 뿐만 아니라 id 객체를 넣기
-    // console.log(task.owner) 
-    const user = await User.findById("5e2ff7c8ab27fd2aaf1df952")
-    await user.populate('tasks').execPopulate()
-    console.log(user.tasks)
-}
+// const main =async () =>{
+//     // const task = await Task.findById("5e2ffcffab27fd2aaf1df956")
+//     // await task.populate('owner').execPopulate() //owner 에 id 값 뿐만 아니라 id 객체를 넣기
+//     // console.log(task.owner) 
+//     const user = await User.findById("5e2ff7c8ab27fd2aaf1df952")
+//     await user.populate('tasks').execPopulate()
+//     console.log(user.tasks)
+// }
 
-main()
+// main()
 
 // const jwt = require('jsonwebtoken')
 
