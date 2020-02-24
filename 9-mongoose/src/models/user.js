@@ -51,9 +51,12 @@ const userSchema = new mongoose.Schema({
     tokens:[{
         token:{
             type:String,
-        required:true
+            required:true
         }
-    }]
+    }],
+    avatar : {
+        type:Buffer
+    }
 })
 
 //task user 연결-  가상  스키마 

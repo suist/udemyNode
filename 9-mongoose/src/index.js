@@ -21,15 +21,26 @@ const upload = multer({
     //     if(!file.originalname.match(/\.(doc|docx)$/)){
     //         return cb(new Error('File must be a word file'))
     //     }
+        // cb(undefined, true) 
 
     // }
     //        cb(new Error('File must be a PDF'))-> 에러 메시지 띄우기
     //cb(undefined,true)-> true 정상  callback
 
 })
-app.post('/upload', upload.single('upload'), (req,res)=>{
+// const errorMiddleware = (req,res,next)=> {
+//     throw new Error ('From my middleware') // 
+// }
+app.post('/upload',upload.single('upload'),(req,res)=>{
     res.send()
-})
+}, (error, req,res,next) => {
+    res.status(400).send({error: error.message })
+}
+)
+
+// app.post('/upload', upload.single('upload'), (req,res)=>{
+//     res.send()
+// })
 
 // app.use((req,res,next)=> {
 //     if(req.method ==='GET'){

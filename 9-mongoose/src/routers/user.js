@@ -176,7 +176,7 @@ router.delete('/users/me',auth, async (req,res)=>{
 //upload avatar
 
 const upload = multer({
-    dest:'avatars',
+
     limits: {
         fileSize:1000000
     },
@@ -189,14 +189,24 @@ const upload = multer({
     }
 })
 
-router.post('/users/me/avatar',upload.single('avatar'),(req,res)=>{
+router.post('/users/me/avatar',auth, upload.single('avatar'), async (req,res)=>{
+    req.user.avatar = req.file.buffer
+    await req.user.save()
     res.send()
 
+}, (error,req,res,next) => {
+    res.status(400).send({ error: error.message })
 })
 
+// <img src="data:image/jpg;base64,55/662345345/5345... ">-> html 로 buffer 로 변환된 binary image 보는법
 
+router.delete('/users/me/avatar',auth, async(req,res) => {
+    req.user.avatar = undefined
+    await req.user.save()
+    res.send(req.user)
+    
 
-
+})
 
 
 //     const _id= req.params.id
