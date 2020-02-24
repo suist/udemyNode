@@ -208,6 +208,24 @@ router.delete('/users/me/avatar',auth, async(req,res) => {
 
 })
 
+//serving up file!
+router.get('/users/:id/avatar',async(req,res) => {
+    try{
+        const user = await User.findById(req.params.id)
+        
+        if(!user || !user.avatar) {
+            throw new Error()
+        }
+        res.set('Content-Type','image/jpg')
+        res.send(user.avatar)
+    }catch(e) {
+
+        res.status(404).send()
+    }
+
+
+})
+
 
 //     const _id= req.params.id
 //     User.findById(_id).then((user)=>{
