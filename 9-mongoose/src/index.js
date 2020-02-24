@@ -7,12 +7,12 @@ const taskRouter = require('./routers/task')
 const app = express()
 const port = process.env.PORT || 3000
 
-const multer = require('multer')
-const upload = multer({
-    dest:'images',
-    limits: {
-        fileSize:10000000000
-    },
+// const multer = require('multer')
+// const upload = multer({
+//     dest:'images',
+//     limits: {
+//         fileSize:10000000000
+//     },
     // fileFilter(req, file, cb) {
     //     if(!file.originalname.endsWith('.pdf')){
     //         return cb(new Error('File must be a PDF'))
@@ -27,16 +27,16 @@ const upload = multer({
     //        cb(new Error('File must be a PDF'))-> 에러 메시지 띄우기
     //cb(undefined,true)-> true 정상  callback
 
-})
+// })
 // const errorMiddleware = (req,res,next)=> {
 //     throw new Error ('From my middleware') // 
 // }
-app.post('/upload',upload.single('upload'),(req,res)=>{
-    res.send()
-}, (error, req,res,next) => {
-    res.status(400).send({error: error.message })
-}
-)
+// app.post('/upload',upload.single('upload'),(req,res)=>{
+//     res.send()
+// }, (error, req,res,next) => {
+//     res.status(400).send({error: error.message })
+// }
+// )
 
 // app.post('/upload', upload.single('upload'), (req,res)=>{
 //     res.send()
