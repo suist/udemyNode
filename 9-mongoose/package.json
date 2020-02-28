@@ -5,7 +5,8 @@
   "main": "mogoose.js",
   "scripts": {
     "start": "node src/index.js",
-    "dev": "env-cmd ./config/dev.env nodemon src/index.js"
+    "dev": "env-cmd ./config/dev.env nodemon src/index.js",
+    "test" : "jest"
   },
   "author": "",
   "license": "ISC",
@@ -24,6 +25,7 @@
   "devDependencies": {
     "env-cmd": "^8.0.2",
     "eslint": "^6.8.0",
+    "jest": "^23.6.0",
     "nodemon": "^1.18.9"
   }
 }
